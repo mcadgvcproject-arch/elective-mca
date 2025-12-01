@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import api, { API_URL } from '../config/api';
+import api from '../config/api';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
-// Connect to socket with dynamic URL
-const SOCKET_URL = API_URL || 'http://localhost:5000';
+// Connect to socket - in production uses same origin, in dev uses localhost:5000
+const SOCKET_URL = import.meta.env.PROD ? window.location.origin : 'http://localhost:5000';
 const socket = io(SOCKET_URL);
 
 const Dashboard = ({ user }) => {
