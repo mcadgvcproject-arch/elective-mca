@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
@@ -25,7 +25,7 @@ const Login = ({ setUser }) => {
       : { rollNumber: formData.rollNumber, password: formData.password };
 
     try {
-      const res = await axios.post(endpoint, payload);
+      const res = await api.post(endpoint, payload);
       if (res.data) {
         localStorage.setItem('user', JSON.stringify(res.data));
         localStorage.setItem('token', res.data.token);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../config/api';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
@@ -35,9 +35,6 @@ const AdminPanel = () => {
   const [batchSemesterForm, setBatchSemesterForm] = useState({ batch: '', newSemester: '', newYear: '' });
   const [isUpdatingBatch, setIsUpdatingBatch] = useState(false);
 
-  const token = localStorage.getItem('token');
-  const config = { headers: { Authorization: `Bearer ${token}` } };
-
   useEffect(() => {
     if (activeTab === 'students') fetchStudents();
     if (activeTab === 'courses') fetchCourses();
@@ -55,7 +52,7 @@ const AdminPanel = () => {
       for (const [key, value] of params.entries()) {
         if (!value) params.delete(key);
       }
-      const res = await axios.get(`/api/admin/students?${params.toString()}`, config);
+      const res = await api.get(`/api/admin/students?${params.toString()}`);
       setStudents(res.data);
     } catch (err) {
       console.error(err);
@@ -64,7 +61,7 @@ const AdminPanel = () => {
 
   const fetchCourses = async () => {
     try {
-      const res = await axios.get('/api/courses', config);
+      const res = await api.get('/api/courses');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -73,7 +70,7 @@ const AdminPanel = () => {
 
   const fetchBatches = async () => {
     try {
-      const res = await axios.get('/api/admin/batches', config);
+      const res = await api.get('/api/admin/batches');
       setBatches(res.data);
     } catch (err) {
       console.error(err);
@@ -117,10 +114,10 @@ const AdminPanel = () => {
     e.preventDefault();
     try {
       if (currentStudent) {
-        await axios.put(`/api/admin/students/${currentStudent._id}`, studentForm, config);
+        await api.put(`/api/admin/students/${currentStudent._id}`, studentForm);
         showMessage('✅ Student updated successfully', 'success');
       } else {
-        await axios.post('/api/admin/students', studentForm, config);
+        await api.post('/api/admin/students', studentForm);
         showMessage('✅ Student added successfully', 'success');
       }
       setShowStudentModal(false);
@@ -133,7 +130,7 @@ const AdminPanel = () => {
   const deleteStudent = async (id) => {
     if (!window.confirm('Are you sure you want to delete this student?')) return;
     try {
-      await axios.delete(`/api/admin/students/${id}`, config);
+      await api.delete(`/api/admin/students/${id}`);
       fetchStudents();
       showMessage('🗑️ Student deleted', 'success');
     } catch (err) {
@@ -147,8 +144,8 @@ const AdminPanel = () => {
     const formData = new FormData();
     formData.append('file', uploadFile);
     try {
-      const res = await axios.post('/api/admin/upload-students', formData, {
-        headers: { ...config.headers, 'Content-Type': 'multipart/form-data' }
+      const res = await api.post('/api/admin/upload-students', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
       });
       showMessage(`✅ ${res.data.message}`, 'success');
       setShowUploadModal(false);
@@ -195,10 +192,10 @@ const AdminPanel = () => {
     e.preventDefault();
     try {
       if (currentCourse) {
-        await axios.put(`/api/admin/courses/${currentCourse._id}`, courseForm, config);
+        await api.put(`/api/admin/courses/${currentCourse._id}`, courseForm);
         showMessage('✅ Course updated successfully', 'success');
       } else {
-        await axios.post('/api/courses', courseForm, config);
+        await api.post('/api/courses', courseForm);
         showMessage('✅ Course added successfully', 'success');
       }
       setShowCourseModal(false);
@@ -211,7 +208,7 @@ const AdminPanel = () => {
   const deleteCourse = async (id) => {
     if (!window.confirm('Are you sure you want to delete this course?')) return;
     try {
-      await axios.delete(`/api/admin/courses/${id}`, config);
+      await api.delete(`/api/admin/courses/${id}`);
       fetchCourses();
       showMessage('🗑️ Course deleted', 'success');
     } catch (err) {
@@ -226,7 +223,7 @@ const AdminPanel = () => {
     
     setIsUpdatingBatch(true);
     try {
-      const res = await axios.put('/api/admin/batch-semester', batchSemesterForm, config);
+      const res = await api.put('/api/admin/batch-semester', batchSemesterForm);
       showMessage(`✅ ${res.data.message}`, 'success');
       setBatchSemesterForm({ batch: '', newSemester: '', newYear: '' });
       fetchStudents();
@@ -242,7 +239,7 @@ const AdminPanel = () => {
     
     setIsUpdatingBatch(true);
     try {
-      const res = await axios.put('/api/admin/batch-promote', { batch }, config);
+      const res = await api.put('/api/admin/batch-promote', { batch });
       showMessage(`✅ ${res.data.message}`, 'success');
       fetchBatches();
       fetchStudents();

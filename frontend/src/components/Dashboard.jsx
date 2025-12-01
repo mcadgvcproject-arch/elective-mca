@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api, { API_URL } from '../config/api';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
 import Logo from './Logo';
 
-const socket = io('http://localhost:5000');
+// Connect to socket with dynamic URL
+const SOCKET_URL = API_URL || 'http://localhost:5000';
+const socket = io(SOCKET_URL);
 
 const Dashboard = ({ user }) => {
   const [courses, setCourses] = useState([]);
@@ -37,10 +39,7 @@ const Dashboard = ({ user }) => {
 
   const fetchCourses = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.get('/api/courses', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.get('/api/courses');
       setCourses(res.data);
     } catch (err) {
       console.error(err);
@@ -49,10 +48,7 @@ const Dashboard = ({ user }) => {
 
   const handleSelect = async (courseId) => {
     try {
-      const token = localStorage.getItem('token');
-      const res = await axios.post(`/api/courses/select/${courseId}`, {}, {
-        headers: { Authorization: `Bearer ${token}` }
-      });
+      const res = await api.post(`/api/courses/select/${courseId}`, {});
       setSelectedCourse(courseId);
       setMessage(res.data.message);
       setMessageType('success');
