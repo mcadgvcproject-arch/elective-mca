@@ -32,7 +32,7 @@ const initializeTransporter = async () => {
   }
 };
 
-export const sendEmail = async ({ to, subject, text, html }) => {
+export const sendEmail = async ({ to, subject, text, html, attachments }) => {
   try {
     if (!to) throw new Error('Recipient email (to) is required');
     if (!subject) throw new Error('Email subject is required');
@@ -49,6 +49,7 @@ export const sendEmail = async ({ to, subject, text, html }) => {
       subject,
       text: text || '',
       html: html || '',
+      attachments: attachments || [],
     };
 
     console.log(`Sending email to ${to} with subject: ${subject}`);

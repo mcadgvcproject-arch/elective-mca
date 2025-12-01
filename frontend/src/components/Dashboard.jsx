@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import io from 'socket.io-client';
 import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 
 const socket = io('http://localhost:5000');
 
@@ -86,7 +87,10 @@ const Dashboard = ({ user }) => {
         🚪 Logout
       </button>
       
-      <h1>Welcome, {user.name} ☕</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
+        <Logo size={50} />
+        <h1 style={{ margin: 0 }}>Welcome, {user.name}</h1>
+      </div>
       <p style={{ color: '#9C7248', marginBottom: '24px' }}>
         Semester {user.semester} • Choose your elective course wisely
       </p>

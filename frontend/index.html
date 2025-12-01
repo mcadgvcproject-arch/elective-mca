@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Elective Course Selector</title>
+    <title>Elective Course Selector | MCA</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
     
     <!-- Preconnect to Google Fonts for faster loading -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,10 +37,6 @@
         align-items: center;
         flex-direction: column;
       }
-      .initial-loader .coffee-icon {
-        font-size: 3rem;
-        animation: bounce 1s ease-in-out infinite;
-      }
       .initial-loader p {
         color: #9C7248;
         margin-top: 16px;
@@ -52,7 +52,7 @@
     <div id="root">
       <!-- Initial loading state shown before React hydrates -->
       <div class="initial-loader">
-        <div class="coffee-icon">☕</div>
+        <img src="/favicon.svg" alt="Logo" style="width: 60px; height: 60px; animation: bounce 1s ease-in-out infinite;" />
         <p>Brewing your experience...</p>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 
 const Login = ({ setUser }) => {
   const [formData, setFormData] = useState({ rollNumber: '', password: '', username: '' });
@@ -43,7 +44,9 @@ const Login = ({ setUser }) => {
   return (
     <div className="login-container">
       <div className="login-card">
-        <div className="login-icon">☕</div>
+        <div className="login-icon">
+          <Logo size={80} />
+        </div>
         <h2>{isAdmin ? 'Admin Portal' : 'Student Portal'}</h2>
         <p className="subtitle">Welcome to Elective Course Selector</p>
         

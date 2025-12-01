@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Logo from './Logo';
 
 const AdminPanel = () => {
   const [activeTab, setActiveTab] = useState('students');
@@ -258,7 +259,10 @@ const AdminPanel = () => {
         🚪 Logout
       </button>
       
-      <h1>Admin Dashboard ☕</h1>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '8px' }}>
+        <Logo size={50} />
+        <h1 style={{ margin: 0 }}>Admin Dashboard</h1>
+      </div>
       <p style={{ color: '#9C7248', marginBottom: '24px' }}>
         Manage students and courses with ease
       </p>
