@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node backend/server.js",
-    "build": "cd frontend && npm install && npm run build",
-    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm install --include=dev && npm run build",
+    "install-all": "cd backend && npm install && cd ../frontend && npm install --include=dev",
     "render-build": "npm run install-all && npm run build"
   },
   "engines": {
