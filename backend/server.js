@@ -46,10 +46,10 @@ app.use(cors({
   credentials: true,
 }));
 
-// Rate limiting
+// Rate limiting (tuned for college campus - many students share same IP)
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  max: 500, // 500 API requests per 15 min per IP (handles 60+ concurrent users on same network)
   message: { message: 'Too many requests, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
@@ -57,7 +57,7 @@ const apiLimiter = rateLimit({
 
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 20, // limit each IP to 20 login attempts per 15 min
+  max: 100, // 100 login attempts per 15 min per IP (college WiFi = shared IP)
   message: { message: 'Too many login attempts, please try again later.' },
   standardHeaders: true,
   legacyHeaders: false,
